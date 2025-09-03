@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Statilytics Studio v1.0 — User Manual</title>
+<style>
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:980px;margin:32px auto;padding:0 16px;line-height:1.55}
+h1,h2,h3{line-height:1.2} code,kbd{background:#f5f5f5;padding:2px 6px;border-radius:6px}
+.card{border:1px solid #e5e7eb;border-radius:12px;padding:14px;margin:12px 0}
+table{border-collapse:collapse;width:100%} th,td{border:1px solid #e5e7eb;padding:6px;text-align:left}
+.muted{color:#6b7280}
+</style></head>
+<body>
+<h1>Statilytics Studio v1.0 — User Manual <span class="muted">© 2025 Mirza Niaz Zaman Elin. All rights reserved.</span></h1>
+<p>Welcome! This guide explains every feature in plain language and shows a sample file for each procedure.</p>
+
+<div class="card"><h2>Quick Start</h2>
+<ol>
+  <li>Click <b>Data → Open CSV/XLSX…</b> and load a file.</li>
+  <li>Go to <b>Analyze</b> tab. Pick a <b>Procedure</b>.</li>
+  <li>Choose columns: <i>Y</i>, <i>X</i>, <i>Group</i>, or list <i>Predictors</i> (comma/space separated; quotes allowed).</li>
+  <li>Press <b>Run</b>. Results appear on the right. Export from <b>Results &amp; Export</b>.</li>
+</ol>
+<p><b>Tip:</b> Open the matching sample data from <code>samples/</code> to try each method.</p>
+</div>
+
+<div class="card"><h2>Which columns go where?</h2>
+<ul>
+<li><b>Y / Outcome</b>: the main thing you’re measuring (numeric for most tests).</li>
+<li><b>X / Second Var</b>: a second measurement (paired tests, ROC score) or variance column for meta-analysis.</li>
+<li><b>Group</b>: a categorical label (e.g., A/B/C) defining groups.</li>
+<li><b>Predictors</b>: one or more columns used by the model (separate by comma/space). Quotes are OK for names with spaces.</li>
+</ul>
+</div>
+
+<h2>Procedures &amp; Sample Files</h2>
+<p>Below, each method tells you <i>what</i> it asks, <i>why</i> you’d use it, <i>how</i> to run it here, and the <i>sample file</i> to practice.</p>
+
+<div class="card"><h3>Crosstab (Chi-square / Fisher)</h3>
+<p><b>What:</b> Tests association between two categories. <b>Why:</b> Are treatment and outcome related?</p>
+<p><b>How:</b> Y=<code>Outcome</code>, X=<code>Treatment</code>. Check Fisher for 2×2 small samples.</p>
+<p><b>Sample:</b> <code>samples/sample_crosstab.csv</code></p>
+</div>
+
+<div class="card"><h3>T-tests &amp; Nonparametrics</h3>
+<ul>
+<li><b>One-sample t:</b> Is one mean different from μ? Y=<code>Score</code>, Constant=50. File: <code>sample_ttest_one_sample.csv</code></li>
+<li><b>Independent t:</b> Two groups (A,B). Y=<code>DV</code>, Group=<code>Group</code>, Levels=A,B. File: <code>sample_ttest_independent.csv</code></li>
+<li><b>Paired t:</b> Before vs After. Y=<code>Pre</code>, X=<code>Post</code>. File: <code>sample_ttest_paired.csv</code></li>
+<li><b>Mann–Whitney U:</b> Like independent t for ranks. Use the independent t sample.</li>
+<li><b>Wilcoxon signed-rank:</b> Like paired t for ranks. Use the paired t sample.</li>
+</ul>
+</div>
+
+<div class="card"><h3>ANOVA Family</h3>
+<ul>
+<li><b>One-way ANOVA / Tukey / Kruskal:</b> Y=<code>Y</code>, Group=<code>Group</code>. File: <code>sample_anova_oneway.csv</code></li>
+<li><b>Repeated-measures ANOVA:</b> Y=<code>score</code>, Subject=<code>subject</code>, Within=<code>time</code>. File: <code>sample_anova_repeated_long.csv</code></li>
+<li><b>ANCOVA:</b> Y=<code>Y</code>, Group=<code>Group</code>, Predictors=<code>Cov1 Cov2</code>. File: <code>sample_ancova.csv</code></li>
+<li><b>Friedman:</b> Predictors=<code>m1 m2 m3</code>. File: <code>sample_friedman.csv</code></li>
+</ul>
+</div>
+
+<div class="card"><h3>Correlations</h3>
+<p>Predictors=<code>x y z</code>. File: <code>sample_correlations.csv</code></p>
+</div>
+
+<div class="card"><h3>Regression &amp; GLMs</h3>
+<ul>
+<li><b>OLS:</b> Y=<code>Y</code>, Predictors=<code>X1 X2</code>. File: <code>sample_ols.csv</code></li>
+<li><b>Logistic:</b> Y=<code>Y</code>, Predictors=<code>X1 X2</code>. File: <code>sample_logistic.csv</code></li>
+<li><b>Multinomial:</b> Y=<code>Y</code>, Predictors=<code>X1 X2</code>. File: <code>sample_multinomial.csv</code></li>
+<li><b>Ordinal:</b> Y=<code>Y</code> (1–5), Predictors=<code>X1</code>. File: <code>sample_ordinal.csv</code></li>
+<li><b>Poisson:</b> Y=<code>Y</code> (counts), Predictors=<code>X</code>. File: <code>sample_glm_poisson.csv</code></li>
+<li><b>Negative binomial:</b> Y=<code>Y</code>, Predictors=<code>X</code>. File: <code>sample_glm_negbin.csv</code></li>
+<li><b>Gamma:</b> Y=<code>Y</code> (>0), Predictors=<code>X</code>. File: <code>sample_glm_gamma.csv</code></li>
+<li><b>Linear mixed model:</b> Y=<code>Y</code>, Predictors=<code>X</code>, Cluster=<code>Cluster</code>. File: <code>sample_lmm.csv</code></li>
+</ul>
+</div>
+
+<div class="card"><h3>Reliability &amp; Agreement</h3>
+<ul>
+<li><b>Cronbach α:</b> Predictors=<code>Item1 Item2 Item3 Item4 Item5</code>. File: <code>sample_cronbach_alpha.csv</code></li>
+<li><b>Cohen κ:</b> Y=<code>RaterA</code>, X=<code>RaterB</code>. File: <code>sample_kappa.csv</code></li>
+<li><b>Weighted κ (linear/quadratic):</b> same as above; ratings should be ordered.</li>
+<li><b>Fleiss κ (multi-rater):</b> Predictors=<code>R1 R2 R3</code>. File: <code>sample_fleiss_icc_kripp.csv</code></li>
+<li><b>ICC:</b> Predictors=<code>R1 R2 R3</code>. File: <code>sample_fleiss_icc_kripp.csv</code></li>
+<li><b>Krippendorff α (nominal/ordinal/interval):</b> Use Predictors or Y &amp; X for exactly two raters. File: <code>sample_fleiss_icc_kripp.csv</code></li>
+</ul>
+</div>
+
+<div class="card"><h3>Survival &amp; Diagnostics</h3>
+<ul>
+<li><b>Survival (KM + Cox + Weibull AFT):</b> Time=<code>time</code>, Event=<code>event</code>, Group=<code>group</code>, Predictors=<code>age</code>. File: <code>sample_survival.csv</code></li>
+<li><b>ROC / PR / Brier:</b> Y=<code>Y</code> (0/1), X=<code>Score</code>. File: <code>sample_roc_pr.csv</code></li>
+</ul>
+</div>
+
+<div class="card"><h3>Time Series</h3>
+<ul>
+<li><b>ARIMA/ETS:</b> Time=<code>Date</code>, Y=<code>Value</code>. File: <code>sample_timeseries.csv</code></li>
+</ul>
+</div>
+
+<div class="card"><h3>Meta-analysis</h3>
+<p>Y=<code>yi</code> (effect), X=<code>vi</code> (variance), Group=<code>by</code> (optional). File: <code>sample_meta_dl.csv</code></p>
+</div>
+
+<div class="card"><h3>Causal Inference</h3>
+<ul>
+<li><b>IPTW (ATE):</b> Y=<code>Y</code> (0/1), Group=<code>A</code> (0/1), Predictors=<code>X1 X2</code>. File: <code>sample_iptw.csv</code></li>
+<li><b>Difference-in-Differences:</b> Y=<code>Y</code>, Group=<code>Treat</code>, Second Group=<code>Post</code>. File: <code>sample_did.csv</code></li>
+</ul>
+</div>
+
+<div class="card"><h3>Dimension Reduction &amp; Clustering</h3>
+<ul>
+<li><b>PCA:</b> Predictors=<code>f1 f2 f3 f4</code>. File: <code>sample_cluster_pca.csv</code></li>
+<li><b>EFA:</b> Predictors=<code>Item1..Item6</code>. File: <code>sample_efa.csv</code></li>
+<li><b>Correspondence analysis:</b> Group=<code>Brand</code>, Second Group=<code>Preference</code>. File: <code>sample_correspondence.csv</code></li>
+<li><b>K-Means / Agglomerative / Auto-KMeans:</b> Predictors=<code>f1 f2 f3 f4</code>. File: <code>sample_cluster_pca.csv</code></li>
+</ul>
+</div>
+
+<div class="card"><h3>Classification (LDA / Tree / CHAID-like / RF)</h3>
+<p>Y=<code>Y</code>, Predictors=<code>X1 X2</code>. File: <code>sample_classifiers.csv</code></p>
+</div>
+
+<hr>
+<p class="muted">Statilytics Studio v1.0 — © 2025 Mirza Niaz Zaman Elin. All rights reserved.</p>
+</body></html>

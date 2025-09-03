@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If this software is used, please cite it as below."
+title: "Statilytics Studio"
+version: "1.0.0"
+date-released: "2025-09-03"
+authors:
+  - family-names: "Elin"
+    given-names: "Mirza Niaz Zaman"
+    email: "niazmirza111@gmail.com"
+license: MIT
+repository-code: "https://github.com/USER/REPO"

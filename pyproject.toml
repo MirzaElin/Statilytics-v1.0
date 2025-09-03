@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "statilytics-studio"
+version = "1.0.0"
+description = "Statilytics Studio: desktop statistics & ML with reproducible reporting (PySide6)"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Mirza Niaz Zaman Elin" }]
+requires-python = ">=3.9"
+keywords = ["statistics", "data analysis", "GUI", "PySide6", "ML", "statsmodels", "scikit-learn"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Topic :: Scientific/Engineering",
+  "Framework :: Qt"
+]
+
+# Keep runtime deps minimal; feature-specific deps are optional 
+dependencies = [
+  "numpy>=1.24",
+  "pandas>=2.0",
+  "scipy>=1.10",
+  "statsmodels>=0.14",
+  "scikit-learn>=1.2",
+]
+
+[project.optional-dependencies]
+gui = ["PySide6>=6.6", "matplotlib>=3.7"]
+survival = ["lifelines>=0.27"]
+reliability = ["pingouin>=0.5", "krippendorff>=0.6"]
+factor = ["factor-analyzer>=0.5"]
+correspondence = ["prince>=0.13"]
+docx = ["python-docx>=1.0.0", "openpyxl>=3.1"]
+full = [
+  "PySide6>=6.6", "matplotlib>=3.7",
+  "lifelines>=0.27",
+  "pingouin>=0.5", "krippendorff>=0.6",
+  "factor-analyzer>=0.5",
+  "prince>=0.13",
+  "python-docx>=1.0.0", "openpyxl>=3.1"
+]
+
+[project.urls]
+Homepage = "https://github.com/USER/REPO"
+Issues = "https://github.com/USER/REPO/issues"
+
+[project.scripts]
+statilytics-studio = "statilytics_studio.app:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
